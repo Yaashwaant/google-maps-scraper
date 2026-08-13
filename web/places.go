@@ -17,15 +17,23 @@ var ErrPlacesNotFound = errors.New("places not found")
 
 // Place is a single map-able result extracted from a job's CSV output.
 type Place struct {
+	Name         string  `json:"name"`
 	Title        string  `json:"title"`
-	Address      string  `json:"address"`
-	Latitude     float64 `json:"latitude"`
-	Longitude    float64 `json:"longitude"`
-	Link         string  `json:"link"`
 	Category     string  `json:"category"`
+	Address      string  `json:"address"`
 	Phone        string  `json:"phone"`
 	Website      string  `json:"website"`
+	Rating       float64 `json:"rating"`
 	ReviewRating float64 `json:"review_rating"`
+	ReviewsCount int     `json:"reviewsCount"`
+	ReviewCount  int     `json:"review_count"`
+	Lat          float64 `json:"lat"`
+	Latitude     float64 `json:"latitude"`
+	Lng          float64 `json:"lng"`
+	Longitude    float64 `json:"longitude"`
+	PhotosCount  int     `json:"photosCount"`
+	ImagesCount  int     `json:"imagesCount"`
+	Link         string  `json:"link"`
 }
 
 // GetPlaces locates the job's CSV output and parses it into mappable places.
@@ -119,16 +127,33 @@ func parsePlaces(r io.Reader) ([]Place, error) {
 			rating = 0
 		}
 
+		reviewsCount, _ := strconv.Atoi(get(row, "review_count"))
+		photosCount, _ := strconv.Atoi(get(row, "images_count"))
+		if photosCount == 0 {
+			imgs := get(row, "images")
+			if len(imgs) > 0 {
+				photosCount = 1
+			}
+		}
+
 		places = append(places, Place{
+			Name:         get(row, "title"),
 			Title:        get(row, "title"),
 			Address:      get(row, "address"),
 			Latitude:     lat,
+			Lat:          lat,
 			Longitude:    lon,
+			Lng:          lon,
 			Link:         get(row, "link"),
 			Category:     get(row, "category"),
 			Phone:        get(row, "phone"),
 			Website:      get(row, "website"),
+			Rating:       rating,
 			ReviewRating: rating,
+			ReviewsCount: reviewsCount,
+			ReviewCount:  reviewsCount,
+			PhotosCount:  photosCount,
+			ImagesCount:  photosCount,
 		})
 	}
 
