@@ -3,6 +3,7 @@ package cmdadmin
 import (
 	"context"
 	"fmt"
+	"strings"
 
 	"github.com/urfave/cli/v3"
 
@@ -59,7 +60,7 @@ func runCreateUser(ctx context.Context, cmd *cli.Command) error {
 
 	username := cmd.String("username")
 	password := cmd.String("password")
-	databaseURL := cmd.String("database-url")
+	databaseURL := strings.TrimSpace(cmd.String("database-url"))
 
 	env.LogUnsetEnvs(saas.EnvDatabaseURL, saas.EnvEncryptionKey)
 

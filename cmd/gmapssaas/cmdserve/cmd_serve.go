@@ -3,6 +3,7 @@ package cmdserve
 import (
 	"context"
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/go-chi/chi/v5"
@@ -75,7 +76,7 @@ var Command = &cli.Command{
 	},
 	Action: func(ctx context.Context, cmd *cli.Command) error {
 		addr := cmd.String("addr")
-		dsn := cmd.String("database-url")
+		dsn := strings.TrimSpace(cmd.String("database-url"))
 
 		// Run database migrations automatically
 		log.Info("running database migrations...")
