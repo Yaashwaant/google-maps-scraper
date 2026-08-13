@@ -11,6 +11,7 @@ import (
 	gocli "github.com/gosom/google-maps-scraper/cli"
 	"github.com/gosom/google-maps-scraper/cryptoext"
 	"github.com/gosom/google-maps-scraper/env"
+	"github.com/gosom/google-maps-scraper/migrations"
 	saas "github.com/gosom/google-maps-scraper/saas"
 )
 
@@ -65,6 +66,11 @@ func runCreateUser(ctx context.Context, cmd *cli.Command) error {
 	encryptionKey, err := cryptoext.ParseEncryptionKey(cmd.String("encryption-key"))
 	if err != nil {
 		return err
+	}
+
+	fmt.Println("Running database migrations...")
+	if _, err := migrations.RunWithDSN(databaseURL); err != nil {
+		return fmt.Errorf("failed to run database migrations: %w", err)
 	}
 
 	store, err := adminpg.New(ctx, databaseURL, encryptionKey)

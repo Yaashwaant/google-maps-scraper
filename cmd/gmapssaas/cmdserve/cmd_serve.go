@@ -76,6 +76,12 @@ var Command = &cli.Command{
 		addr := cmd.String("addr")
 		dsn := cmd.String("database-url")
 
+		// Run database migrations automatically
+		log.Info("running database migrations...")
+		if _, err := migrations.RunWithDSN(dsn); err != nil {
+			return fmt.Errorf("failed to run database migrations: %w", err)
+		}
+
 		// Connect to database
 		dbPool, err := postgres.Connect(ctx, dsn,
 			postgres.WithMaxConns(int32(cmd.Int("db-max-conns"))),
