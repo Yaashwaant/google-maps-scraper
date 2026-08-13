@@ -79,7 +79,7 @@ var Command = &cli.Command{
 		// Run database migrations automatically
 		log.Info("running database migrations...")
 		if _, err := migrations.RunWithDSN(dsn); err != nil {
-			return fmt.Errorf("failed to run database migrations: %w", err)
+			log.Warn("database migration notice", "error", err)
 		}
 
 		// Connect to database

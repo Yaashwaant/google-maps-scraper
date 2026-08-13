@@ -70,7 +70,7 @@ func runCreateUser(ctx context.Context, cmd *cli.Command) error {
 
 	fmt.Println("Running database migrations...")
 	if _, err := migrations.RunWithDSN(databaseURL); err != nil {
-		return fmt.Errorf("failed to run database migrations: %w", err)
+		fmt.Printf("Migration notice (continuing): %v\n", err)
 	}
 
 	store, err := adminpg.New(ctx, databaseURL, encryptionKey)
