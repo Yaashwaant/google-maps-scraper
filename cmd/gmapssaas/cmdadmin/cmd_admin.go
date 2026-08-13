@@ -12,7 +12,6 @@ import (
 	gocli "github.com/gosom/google-maps-scraper/cli"
 	"github.com/gosom/google-maps-scraper/cryptoext"
 	"github.com/gosom/google-maps-scraper/env"
-	"github.com/gosom/google-maps-scraper/migrations"
 	saas "github.com/gosom/google-maps-scraper/saas"
 )
 

@@ -20,7 +20,6 @@ import (
 	"github.com/gosom/google-maps-scraper/env"
 	"github.com/gosom/google-maps-scraper/httpext"
 	"github.com/gosom/google-maps-scraper/log"
-	"github.com/gosom/google-maps-scraper/migrations"
 	"github.com/gosom/google-maps-scraper/postgres"
 	ratelimitpostgres "github.com/gosom/google-maps-scraper/ratelimit/postgres"
 	"github.com/gosom/google-maps-scraper/rqueue"
